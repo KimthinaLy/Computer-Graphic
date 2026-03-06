@@ -2,6 +2,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from OpenGL.GL import *
 
+#Rectangle
 XMax = 200.0
 YMax = 200.0
 XMin = -XMax
@@ -17,6 +18,9 @@ drawInside = False
 originalP = []
 p = []
 p_temp = []
+
+r1,g1,b1 = 0.0, 0.5, 0.5
+r2,g2,b2 = 0.0, 0.5, 0.5
 
 def SetPoint():
   global p, originalP
@@ -46,7 +50,7 @@ def display():
   
   #Draw Original Points
   glPushMatrix()
-  glColor3f(0.0, 0.5, 0.5)
+  glColor3f(r1, g1, b1)
   glBegin(GL_POLYGON)
   for i in originalP:
     glVertex2f(i[0], i[1])
@@ -54,16 +58,16 @@ def display():
   glPopMatrix()
   
   
-  #Draw Clipped Points
-  if (drawInside):
-    glPushMatrix()  
-    glColor3f(1.0, 1.0, 1.0)
-    glBegin(GL_POLYGON)
-    for i in p:
-      glVertex2f(i[0], i[1])
-    glEnd()
-    glPopMatrix()
-    
+  #Draw Clipped Points in white color
+
+  glPushMatrix()  
+  glColor3f(r2, g2, b2)
+  glBegin(GL_POLYGON)
+  for i in p:
+    glVertex2f(i[0], i[1])
+  glEnd()
+  glPopMatrix()
+  
   #Draw Window
   glPushMatrix()
   glColor3f(1.0, 0.0, 0.0)
@@ -78,12 +82,16 @@ def display():
   glFlush()
   
 def OnKeyboard(key, X, Y):
-  global drawInside
+  global r1,g1,b1,r2,g2,b2
   
-  if(key.lower() == b'\r'):
+  if(key.lower() == b'o'):
+    r1,g1,b1 = 1.0, 1.0, 1.0
+    r2,g2,b2 = 0.0, 0.5, 0.5
     ClipObj()
-    drawInside = not drawInside
-    
+  if(key.lower() == b'i'):
+    r1,g1,b1 = 0.0, 0.5, 0.5
+    r2,g2,b2 = 1.0, 1.0, 1.0
+    ClipObj()
   glutPostRedisplay() 
 
 def ClipObj():
