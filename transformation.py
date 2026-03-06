@@ -8,55 +8,8 @@ name = b'Transformation'
 
 left, right, bottom, top = -4., 4., -1., 4.
 
-cx, cy = 0., 0.
 o = np.array([[0, 0, 1], [0,2, 1], [2, 0, 1]])
-T = np.zeros([3,3], dtype = float)
 transform = False
-
-def init():
-  global cx,cy
-  sx, sy = 0., 0.
-  for p in o:
-      sx =sx + p[0]
-      sy =sy + p[1]
-  cx = sx/len(o)
-  cy = sy/len(o)
-
-def myPushMatrix():
-  global T
-  T = np.identity(3, dtype=float)
-  print("Identity\n", T)
-
-def myRotatef(theta):
-  global T
-  R = np.identity(3, dtype=float)
-  ang = (theta*np.pi)/180
-  R[0,0] = math.cos(ang)
-  R[0,1] = math.sin(ang)
-  R[1,0] = -math.sin(ang)
-  R[1,1] = math.cos(ang)
-  T = np.matmul(R,T)
-  print("Rotate\n", T)
-  
-def myTranslatef(tx,ty):
-  global T
-  Ts =  np.identity(3, dtype = float)
-  Ts[2,0] = tx
-  Ts[2,1] = ty
-  T = np.matmul(Ts, T)
-  print("Translate\n", T)
-  
-def myScalef(sx, sy):
-  global T
-  Sc = np.identity(3, dtype=float)
-  Sc[0,0] = sx
-  Sc[1,1] = sy
-  T = np.matmul(Sc, T)
-  print("Scale\n", T)
-  
-def myPopMatrix():
-  T = np.zeros([3,3], dtype=float)
-  print("Pop\n", T)
   
 def InitGL():
   glClearColor(1.0,1.0,1.0,0.0)
@@ -79,29 +32,21 @@ def display():
   glEnd()
   glPopMatrix()
   
-  if not transform:
-    glPushMatrix()
-    glBegin(GL_TRIANGLES)
+  glPushMatrix()
+  if transform:
     glColor3f(0.0,1.0,0.0)
-    for p in o:
-      glVertex2f(p[0], p[1])
-    glEnd()
-    glPopMatrix() 
-  else: 
-    myPushMatrix()
+    glTranslatef(-3,3,0)
+    glScalef(2,-1,0)
+  else:
     glColor3f(1.0,0.0,0.0)
-    myTranslatef(cx-3, cy+1.68) 
-    myRotatef(270)
-    myTranslatef(-cx, -cy) 
-    myScalef(1,2)
-    obj = np.matmul(o,T)
-    glBegin(GL_TRIANGLES)
-    for p in obj:
-      glVertex2f(p[0], p[1])
-    glEnd()
-    myPopMatrix()
     
-  glutSwapBuffers()
+  glBegin(GL_TRIANGLES)
+  for p in o:
+    glVertex2f(p[0], p[1])
+  glEnd()
+  glPopMatrix() 
+    
+  glFlush()
   
 def OnKeyboard(key, x, y):
   global transform
@@ -111,10 +56,9 @@ def OnKeyboard(key, x, y):
   
 def main():
   glutInit()
-  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE)
+  glutInitDisplayMode(GLUT_RGB)
   glutInitWindowSize(800, 500)
   glutCreateWindow(name)
-  init()
   InitGL()
   glutDisplayFunc(display)
   glutKeyboardFunc(OnKeyboard)
