@@ -10,6 +10,7 @@ TOP = 8 # 1000
 
 left, right, bottom, top = -4, 4, -4, 4
 
+#Rectangle
 xmin, ymin = -2, -1.2
 xmax, ymax = 2, 1.2
 
@@ -20,9 +21,13 @@ x2,  y2 = 2.7, -1
 x1_Original, y1_Original = x1, y1
 x2_Original, y2_Original = x2, y2
 
-draw = True
+
+draw= True
 drawInside = False
 drawOutside = False
+
+r1,g1,b1 = 1.0, 0.0, 0.0
+r2,g2,b2 = 1.0, 0.0, 0.0
 
 def InitGL():
     glClearColor(1.,1.,1.,0.) 
@@ -35,35 +40,22 @@ def InitGL():
 def display():
     glClear(GL_COLOR_BUFFER_BIT)
     glPushMatrix()
-
-    glColor3f(1.0, 0.0, 0.0)
-    glBegin(GL_LINES)
-    glVertex2f(x1_Original, y1_Original)
-    glVertex2f(x2_Original, y2_Original)
-    glEnd()
     
-    if(drawInside):
-        if(x1_Original != x1):
-            glColor3f(1.0, 1.0, 1.0)
-            glBegin(GL_LINES)
-            glVertex2f(x1_Original, y1_Original)
-            glVertex2f(x1, y1)
-            glEnd()
-            
-        if(x2_Original != x2):
-            glColor3f(1.0, 1.0, 1.0)
-            glBegin(GL_LINES)
-            glVertex2f(x2_Original, y2_Original)
-            glVertex2f(x2, y2)
-            glEnd()
-            
-    if(drawOutside):
-        if(x1_Original != x1):
-            glColor3f(1.0, 1.0, 1.0)
-            glBegin(GL_LINES)
-            glVertex2f(x1,y1)
-            glVertex2f(x2,y2)
-            glEnd()
+    if draw:
+        glColor3f(r1, g1, b1)
+        glBegin(GL_LINES)
+        glVertex2f(x1_Original, y1_Original)
+        glVertex2f(x2_Original, y2_Original)
+        glEnd()
+        
+
+    if(x1_Original != x1):
+        glColor3f(r2, g2, b2)
+        glBegin(GL_LINES)
+        glVertex2f(x1, y1)
+        glVertex2f(x2, y2)
+        glEnd()
+        
     glPopMatrix()
     
     glPushMatrix()
@@ -92,14 +84,15 @@ def main():
 
 def On_Keyboard(key, x, y):
     global drawOutside, drawInside
-    
+    global r1,g1,b1,r2,g2,b2
     if(key == b'1'):
-        drawOutside = True
-        drawInside = False
+        
+        r1,g1,b1 = 1.0, 0.0, 0.0
+        r2,g2,b2 = 1.0, 1.0, 1.0
         ClipLine()
     if(key == b'2'):
-        drawInside = True
-        drawOutside = False
+        r1,g1,b1 = 1.0, 1.0, 1.0
+        r2,g2,b2 = 1.0, 0.0, 0.0
         ClipLine()
     glutPostRedisplay()
 
@@ -117,18 +110,18 @@ def encode(x, y):
     return code
 
 def ClipLine():
-    global accept
+    global draw
     global x1, x2, y1, y2
     global x1_Original, x2_Original, y1_Original, y2_Original
     
-    while(True):
+    while(True): #not drawing if both points are outside
         code1 = encode(x1, y1)
         code2 = encode(x2, y2)
         if not(code1 | code2):
-            accept = True
+            draw = True
             break
         elif (code1 & code2):
-            accept = False
+            draw = False
             break
         else:
             if not(code1):
