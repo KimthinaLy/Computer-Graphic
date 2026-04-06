@@ -23,8 +23,7 @@ x2_Original, y2_Original = x2, y2
 
 
 draw= True
-drawInside = False
-drawOutside = False
+
 
 r1,g1,b1 = 1.0, 0.0, 0.0
 r2,g2,b2 = 1.0, 0.0, 0.0
@@ -83,7 +82,6 @@ def main():
     return
 
 def On_Keyboard(key, x, y):
-    global drawOutside, drawInside
     global r1,g1,b1,r2,g2,b2
     if(key == b'1'):
         
@@ -126,7 +124,6 @@ def ClipLine():
         else:
             if not(code1):
                 x1, y1, x2, y2 = x2, y2, x1, y1
-                x1_Original, y1_Original, x2_Original, y2_Original = x2_Original, y2_Original, x1_Original, y1_Original
                 code1, code2 = code2, code1
             
             if code1 & TOP: 
