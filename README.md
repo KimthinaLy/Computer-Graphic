@@ -22,6 +22,7 @@
 
 ## 5. Blending
 - [Source Code](05-Blending.py)
+
   <img width="494" height="520" alt="Image" src="https://github.com/user-attachments/assets/dd8af3ef-557a-47f4-960c-9376ea653930" />
 <hr>
   
