@@ -11,19 +11,18 @@
 <hr>
 
 ## 3. Object Transform 1
-- [Source Code](03-transformation.py)
-  <img width="853" height="533" alt="Image" src="https://github.com/user-attachments/assets/30873782-a7e0-41a6-b197-c5cd4f6decfa" />
+- [Source Code](03-transformation.py)  
+<img width="853" height="533" alt="Image" src="https://github.com/user-attachments/assets/30873782-a7e0-41a6-b197-c5cd4f6decfa" />
 <hr>
 
 ## 4. Object Transfrom 2
 - [Source Code](04-composition_matrix.py)
-  <img width="1273" height="647" alt="Image" src="https://github.com/user-attachments/assets/cb574193-bce8-4c8b-8a0c-6562e98b7338" />
+<img width="1273" height="647" alt="Image" src="https://github.com/user-attachments/assets/cb574193-bce8-4c8b-8a0c-6562e98b7338" />
 <hr>
 
 ## 5. Blending
 - [Source Code](05-blending.py)
-
-  <img width="494" height="520" alt="Image" src="https://github.com/user-attachments/assets/dd8af3ef-557a-47f4-960c-9376ea653930" />
+<img width="494" height="520" alt="Image" src="https://github.com/user-attachments/assets/dd8af3ef-557a-47f4-960c-9376ea653930" />
 <hr>
   
 ## (6. Pending)
